@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL || "https://jobly-backend-r8fh.onrender.com";
 
 /** JoblyApi: class with static methods to interact with backend API */
 class JoblyApi {
