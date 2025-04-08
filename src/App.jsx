@@ -3,9 +3,10 @@ import { BrowserRouter } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import NavBar from "./NavBar";
 import RoutesList from "./RoutesList";
-import JoblyApi from "../../api";
+import JoblyApi from "./api";
 import UserContext from "./UserContext";
 import useLocalStorage from "./hooks/useLocalStorage";
+import "./App.css";
 
 function App() {
   const [token, setToken] = useLocalStorage("jobly-token");

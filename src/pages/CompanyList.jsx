@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import JoblyApi from "../../../api";
+import JoblyApi from "../api";
 import CompanyCard from "../components/CompanyCard";
 
 /** Lists all companies with search functionality. */

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../UserContext";
-import JoblyApi from "../../../api";
+import JoblyApi from "../api";
 
 /** JobCard: Shows info about a job and handles applying */
 function JobCard({ job }) {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../UserContext";
-import JoblyApi from "../../../api";
+import JoblyApi from "../api";
 
 /** ProfileForm: allows logged-in user to update their info */
 function ProfileForm() {
