@@ -11,7 +11,8 @@ function JobList() {
     async function fetchJobs() {
       try {
         const jobs = await JoblyApi.getJobs();
-        setJobs(jobs);
+        console.log("Jobs from API:", jobs);
+        setJobs(jobs.filter(j => j && j.id));
       } catch (err) {
         console.error("Error fetching jobs:", err);
       }
@@ -23,7 +24,7 @@ function JobList() {
     evt.preventDefault();
     try {
       const jobs = await JoblyApi.getJobs(searchTerm.trim());
-      setJobs(jobs);
+      setJobs(jobs.filter(j => j && j.id));
     } catch (err) {
       console.error("Error searching jobs:", err);
     }
