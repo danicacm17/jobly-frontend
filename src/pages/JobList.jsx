@@ -6,15 +6,19 @@ import JobCard from "../components/JobCard";
 function JobList() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchJobs() {
       try {
         const jobs = await JoblyApi.getJobs();
-        console.log("Jobs from API:", jobs);
-        setJobs(jobs.filter(j => j && j.id));
+        console.log("Fetched jobs:", jobs);
+        setJobs(jobs.filter(job => job && job.id));
       } catch (err) {
         console.error("Error fetching jobs:", err);
+        setJobs([]);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchJobs();
@@ -22,11 +26,16 @@ function JobList() {
 
   async function handleSearch(evt) {
     evt.preventDefault();
+    setIsLoading(true);
     try {
       const jobs = await JoblyApi.getJobs(searchTerm.trim());
-      setJobs(jobs.filter(j => j && j.id));
+      console.log("Search results:", jobs);
+      setJobs(jobs.filter(job => job && job.id));
     } catch (err) {
-      console.error("Error searching jobs:", err);
+      console.error("Search error:", err);
+      setJobs([]);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -44,9 +53,11 @@ function JobList() {
         <button>Search</button>
       </form>
 
-      <div className="JobList-list">
-        {jobs.length > 0 ? (
-          jobs.map((job) => (
+      {isLoading ? (
+        <p>Loading jobs...</p>
+      ) : jobs.length > 0 ? (
+        <div className="JobList-list">
+          {jobs.map((job) => (
             <JobCard
               key={job.id}
               id={job.id}
@@ -55,11 +66,11 @@ function JobList() {
               equity={job.equity}
               companyName={job.companyName}
             />
-          ))
-        ) : (
-          <p>No results found.</p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p>No results found.</p>
+      )}
     </div>
   );
 }
