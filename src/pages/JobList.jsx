@@ -1,29 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import JoblyApi from "../api";
 import JobCard from "../components/JobCard";
-import UserContext from "../UserContext";
 
+/** Displays list of all jobs with optional search bar. */
 function JobList() {
-  const { currentUser, applyToJob, hasAppliedToJob } = useContext(UserContext);
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchJobs() {
-      try {
-        const result = await JoblyApi.getJobs();
-        setJobs(result);
-      } catch (err) {
-        console.error("Error loading jobs", err);
-      }
+      const jobs = await JoblyApi.getJobs();
+      setJobs(jobs);
     }
     fetchJobs();
   }, []);
 
   async function handleSearch(evt) {
     evt.preventDefault();
-    const result = await JoblyApi.getJobs(searchTerm.trim());
-    setJobs(result);
+    const jobs = await JoblyApi.getJobs(searchTerm.trim());
+    setJobs(jobs);
   }
 
   return (
@@ -32,29 +27,28 @@ function JobList() {
 
       <form onSubmit={handleSearch}>
         <input
+          name="searchTerm"
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
           placeholder="Search jobs..."
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button>Search</button>
       </form>
 
-      <div className="JobList-list">
-        {jobs.length ? (
-          jobs.map(job => (
-            <JobCard
-              key={job.id}
-              id={job.id}
-              title={job.title}
-              salary={job.salary}
-              equity={job.equity}
-              companyName={job.companyName}
-            />
-          ))
-        ) : (
-          <p>No jobs found.</p>
-        )}
-      </div>
+      {jobs.length ? (
+        jobs.map((job) => (
+          <JobCard
+            key={job.id}
+            id={job.id}
+            title={job.title}
+            salary={job.salary}
+            equity={job.equity}
+            companyName={job.companyName}
+          />
+        ))
+      ) : (
+        <p>No jobs found.</p>
+      )}
     </div>
   );
 }
