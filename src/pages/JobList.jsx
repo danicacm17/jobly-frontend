@@ -14,12 +14,12 @@ function JobList() {
         const jobs = await JoblyApi.getJobs();
         console.log("Fetched jobs:", jobs);
 
-        // ✅ Filter out malformed jobs
-        const filtered = jobs.filter(
+        // 🚨 Ensure that each job has the required properties (defensive programming)
+        const validJobs = jobs.filter(
           (job) => job && job.id && job.title && job.companyName
         );
 
-        setJobs(filtered);
+        setJobs(validJobs);
       } catch (err) {
         console.error("Error fetching jobs:", err);
         setJobs([]);
@@ -37,12 +37,12 @@ function JobList() {
       const jobs = await JoblyApi.getJobs(searchTerm.trim());
       console.log("Search results:", jobs);
 
-      // ✅ Filter search results too
-      const filtered = jobs.filter(
+      // 🚨 Ensure valid jobs are returned from search
+      const validJobs = jobs.filter(
         (job) => job && job.id && job.title && job.companyName
       );
 
-      setJobs(filtered);
+      setJobs(validJobs);
     } catch (err) {
       console.error("Search error:", err);
       setJobs([]);
