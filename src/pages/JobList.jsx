@@ -10,6 +10,7 @@ function JobList() {
   useEffect(() => {
     async function fetchJobs() {
       const jobs = await JoblyApi.getJobs();
+      console.log("Jobs from API:", jobs); // ✅ Add this
       setJobs(jobs);
     }
     fetchJobs();
