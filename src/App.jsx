@@ -64,14 +64,12 @@ function App() {
   if (!infoLoaded) return <p className="loading">Loading...</p>; // ✅ block render
 
   return (
-    <HashRouter>
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}
       >
         <NavBar logout={logout} />
         <RoutesList login={login} signup={signup} />
       </UserContext.Provider>
-    </HashRouter>
   );
 }
 
