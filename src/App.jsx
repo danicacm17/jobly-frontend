@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter } from "react-router-dom"; // ✅ use HashRouter for Render deployment
+import { HashRouter } from "react-router-dom";
 import JoblyApi from "./api";
 import UserContext from "./UserContext";
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -10,6 +10,7 @@ import "./App.css";
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage("jobly-token", null);
+  const [infoLoaded, setInfoLoaded] = useState(false); // ✅ new loading state
 
   useEffect(() => {
     async function getUser() {
@@ -23,8 +24,12 @@ function App() {
           console.error("App loadUserInfo failed", err);
           setCurrentUser(null);
         }
+      } else {
+        setCurrentUser(null);
       }
+      setInfoLoaded(true); // ✅ finished loading
     }
+    setInfoLoaded(false); // ✅ reset before fetching
     getUser();
   }, [token]);
 
@@ -56,13 +61,17 @@ function App() {
     }));
   }
 
+  if (!infoLoaded) return <p className="loading">Loading...</p>; // ✅ block render
+
   return (
+    <HashRouter>
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}
       >
         <NavBar logout={logout} />
         <RoutesList login={login} signup={signup} />
       </UserContext.Provider>
+    </HashRouter>
   );
 }
 
