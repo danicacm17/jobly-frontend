@@ -1,172 +1,68 @@
-/* General Layout */
+
+/* General reset and font */
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: url("https://img.freepik.com/free-vector/abstract-background_53876-43362.jpg?t=st=1744121465~exp=1744125065~hmac=4ba8f91b6a084215f71e6292def77a4492a0c5a2446cd06ce812b5b0fc03c118&w=996")
-    no-repeat center center fixed;
+  background-image: url("https://img.freepik.com/free-vector/abstract-background_53876-43362.jpg");
   background-size: cover;
-  color: #fff;
+  background-position: center;
+  color: #333;
 }
 
-/* Navigation */
-nav {
+/* Navbar styles */
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #222;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-nav a {
-  margin-left: 1.5rem;
+.navbar a {
+  margin: 0 0.75rem;
+  text-decoration: none;
+  color: #111;
   font-weight: 600;
-  transition: color 0.3s ease;
-  color: #333;
+  transition: color 0.3s;
 }
 
-nav a:hover {
+.navbar a:hover {
   color: #007bff;
 }
 
-/* Homepage */
-.Homepage {
-  text-align: center;
-  padding: 8rem 2rem;
-  color: white;
-  text-shadow: 1px 1px 3px #000;
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
 }
 
-.Homepage h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.Homepage p {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.Homepage button {
-  margin: 0 0.5rem;
-  padding: 0.8rem 1.8rem;
-  font-size: 1.1rem;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.Homepage button:hover {
-  background-color: #0056b3;
-}
-
-/* Cards */
+/* Card styles */
 .card {
-  background-color: white;
-  color: #333;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.card h4 {
-  font-size: 1.2rem;
-  margin-bottom: 0.4rem;
-}
-
-.card p {
-  margin: 0.3rem 0;
-}
-
-.card button {
-  background-color: #dc3545;
-  color: white;
-  font-weight: bold;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 5px;
-  float: right;
-  cursor: pointer;
-}
-
-.card button:hover {
-  background-color: #bb2d3b;
-}
-
-/* Forms */
-form {
   background: white;
-  color: #333;
-  max-width: 500px;
-  margin: 3rem auto;
-  padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  padding: 1.25rem;
+  margin: 1rem auto;
+  max-width: 700px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-form div {
-  margin-bottom: 1rem;
-}
-
-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-}
-
-form input {
-  width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-form button {
-  background-color: #007bff;
-  color: white;
-  padding: 0.7rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  width: 100%;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-form button:hover {
-  background-color: #0056b3;
-}
-
-/* Search */
-.SearchForm {
-  text-align: center;
-  margin: 2rem auto;
-}
-
-.SearchForm input {
-  padding: 0.7rem;
-  width: 60%;
-  max-width: 320px;
-  border: 1px solid #ccc;
-  border-radius: 6px 0 0 6px;
-}
-
-.SearchForm button {
-  padding: 0.7rem 1.2rem;
-  background-color: #007bff;
-  border: none;
+/* Apply button style */
+.apply-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background-color: crimson;
   color: white;
   font-weight: bold;
-  border-radius: 0 6px 6px 0;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.SearchForm button:hover {
-  background-color: #0056b3;
+.apply-btn:hover {
+  background-color: darkred;
 }
