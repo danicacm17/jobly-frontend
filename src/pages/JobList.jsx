@@ -33,7 +33,7 @@ function JobList() {
 
   return (
     <div className="JobList">
-      <h1>Jobs</h1>
+      <h2>Jobs</h2>
 
       <form onSubmit={handleSearch}>
         <input

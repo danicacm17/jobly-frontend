@@ -8,11 +8,6 @@ body {
   color: #fff;
 }
 
-h2 {
-  text-align: center;
-  margin: auto;
-}
-
 /* Navigation */
 nav {
   display: flex;
@@ -79,9 +74,8 @@ nav a:hover {
   color: #333;
   border-radius: 12px;
   padding: 1.5rem;
-  margin: 1.5rem 0;
-  width: 80%;
-  max-width: 500px;
+  margin: 1.5rem auto; /* ✅ centers the card horizontally */
+  width: 80%; /* ✅ takes 80% of the page width */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   position: relative;
 }

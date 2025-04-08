@@ -24,7 +24,7 @@ function CompanyList() {
 
   return (
     <div className="CompanyList">
-      <h1>Companies</h1>
+      <h2>Companies</h2>
 
       <form onSubmit={handleSearch}>
         <input
