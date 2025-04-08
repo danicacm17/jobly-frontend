@@ -2,24 +2,23 @@ import React, { useEffect, useState } from "react";
 import JoblyApi from "../api";
 import JobCard from "../components/JobCard";
 
-/** Lists all jobs with a search bar */
+/** Lists all jobs with search functionality. */
 function JobList() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchJobs() {
-      const result = await JoblyApi.getJobs();
-      setJobs(result);
+      const fetchedJobs = await JoblyApi.getJobs();
+      setJobs(fetchedJobs);
     }
     fetchJobs();
   }, []);
 
-  /** Handle job search form submit */
   async function handleSearch(evt) {
     evt.preventDefault();
-    const result = await JoblyApi.getJobs(searchTerm.trim());
-    setJobs(result);
+    const fetchedJobs = await JoblyApi.getJobs(searchTerm.trim());
+    setJobs(fetchedJobs);
   }
 
   return (
@@ -36,13 +35,13 @@ function JobList() {
         <button>Search</button>
       </form>
 
-      {jobs.length ? (
-        jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))
-      ) : (
-        <p>No results found.</p>
-      )}
+      <div className="JobList-list">
+        {jobs.length ? (
+          jobs.map((job) => <JobCard key={job.id} job={job} />)
+        ) : (
+          <p>No results found.</p>
+        )}
+      </div>
     </div>
   );
 }

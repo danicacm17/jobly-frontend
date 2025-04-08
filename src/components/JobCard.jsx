@@ -1,29 +1,33 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import UserContext from "../UserContext";
+import JoblyApi from "../api";
 
-/** JobCard: renders information about a single job. */
+/** Summary view of a single job (used in JobList and CompanyDetail) */
 function JobCard({ job }) {
-  const { hasAppliedToJob, applyToJob, currentUser } = useContext(UserContext);
+  const { currentUser, hasAppliedToJob, applyToJob } = useContext(UserContext);
 
-  const applied = hasAppliedToJob(job.id);
+  const hasApplied = hasAppliedToJob(job.id);
 
-  function handleApply(evt) {
-    applyToJob(job.id);
+  async function handleApply(evt) {
+    evt.preventDefault();
+    if (hasApplied) return;
+    await applyToJob(job.id);
   }
 
   return (
-    <div className="JobCard">
-      <h4>{job.title}</h4>
-      <p><strong>Company:</strong> {job.companyName || job.companyHandle}</p>
-      <p><strong>Salary:</strong> {job.salary ?? "N/A"}</p>
-      <p><strong>Equity:</strong> {job.equity ?? "N/A"}</p>
+    <div className="JobCard card">
+      <h3>{job.title}</h3>
+      <p>Salary: {job.salary || "N/A"}</p>
+      <p>Equity: {job.equity || "0"}</p>
+      <p>Company: {job.companyName || job.companyHandle}</p>
 
       {currentUser && (
         <button
+          className="apply-btn"
           onClick={handleApply}
-          disabled={applied}
+          disabled={hasApplied}
         >
-          {applied ? "Applied" : "Apply"}
+          {hasApplied ? "Applied" : "Apply"}
         </button>
       )}
     </div>
