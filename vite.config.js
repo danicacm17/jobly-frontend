@@ -5,6 +5,5 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: "dist"
-  },
-  base: "/", // ensures proper resolution of assets + routing
+  }
 });
