@@ -1,24 +1,34 @@
-import React, { useEffect, useState } from "react";
+// src/pages/JobList.jsx
+import React, { useEffect, useState, useContext } from "react";
 import JoblyApi from "../api";
 import JobCard from "../components/JobCard";
+import UserContext from "../UserContext";
 
-/** Lists all jobs with search functionality. */
 function JobList() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { currentUser, applyToJob } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchJobs() {
-      const fetchedJobs = await JoblyApi.getJobs();
-      setJobs(fetchedJobs);
+      try {
+        const fetchedJobs = await JoblyApi.getJobs();
+        setJobs(fetchedJobs);
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
     }
     fetchJobs();
   }, []);
 
   async function handleSearch(evt) {
     evt.preventDefault();
-    const fetchedJobs = await JoblyApi.getJobs(searchTerm.trim());
-    setJobs(fetchedJobs);
+    try {
+      const searched = await JoblyApi.getJobs(searchTerm.trim());
+      setJobs(searched);
+    } catch (err) {
+      console.error("Error searching jobs:", err);
+    }
   }
 
   return (
@@ -27,19 +37,24 @@ function JobList() {
 
       <form onSubmit={handleSearch}>
         <input
-          name="searchTerm"
           value={searchTerm}
-          placeholder="Search jobs..."
           onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search jobs..."
         />
         <button>Search</button>
       </form>
 
       <div className="JobList-list">
         {jobs.length ? (
-          jobs.map((job) => <JobCard key={job.id} job={job} />)
+          jobs.map((job) => (
+            <JobCard
+              key={job.id}
+              job={job}
+              apply={applyToJob}
+            />
+          ))
         ) : (
-          <p>No results found.</p>
+          <p>No jobs found.</p>
         )}
       </div>
     </div>
