@@ -1,37 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import UserContext from "../UserContext";
 import JoblyApi from "../api";
 
-/** JobCard: Shows info about a job and handles applying */
-function JobCard({ job }) {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  const [applied, setApplied] = useState(false);
+/** JobCard: shows individual job info and handles "Apply" logic */
+function JobCard({ id, title, salary, equity, companyName }) {
+  const { currentUser, hasAppliedToJob, applyToJob } = useContext(UserContext);
 
-  useEffect(() => {
-    if (currentUser && currentUser.applications) {
-      const hasApplied = currentUser.applications.includes(job.id);
-      setApplied(hasApplied);
-      console.log(`🔍 Job ${job.id} applied:`, hasApplied);
-    }
-  }, [currentUser, job.id]);
+  // 👇 Defensive check
+  if (!id || !title) return null;
 
-  async function handleApply() {
+  const applied = hasAppliedToJob(id);
+
+  async function handleApply(evt) {
     if (applied) return;
-
-    await JoblyApi.applyToJob(currentUser.username, job.id);
-    setApplied(true);
-
-    setCurrentUser(user => ({
-      ...user,
-      applications: [...user.applications, job.id]
-    }));
+    await applyToJob(id);
   }
 
   return (
-    <div className="JobCard card">
-      <h4>{job.title}</h4>
-      <p>Salary: {job.salary ?? "N/A"}</p>
-      <p>Equity: {job.equity ?? "0"}</p>
+    <div className="JobCard">
+      <h4>{title}</h4>
+      <p>{companyName}</p>
+      <p>Salary: {salary !== null ? `$${salary.toLocaleString()}` : "N/A"}</p>
+      <p>Equity: {equity || "None"}</p>
       <button onClick={handleApply} disabled={applied}>
         {applied ? "Applied" : "Apply"}
       </button>
