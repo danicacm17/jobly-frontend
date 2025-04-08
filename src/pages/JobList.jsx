@@ -2,60 +2,37 @@ import React, { useEffect, useState } from "react";
 import JoblyApi from "../api";
 import JobCard from "../components/JobCard";
 
-/** JobList: Shows a list of jobs with optional search input. */
+/** JobList
+ * 
+ * Displays a list of all jobs. Includes a search bar for filtering jobs
+ * by title. Gracefully handles cases where companyName is not available
+ * (fallbacks to companyHandle).
+ */
 function JobList() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch all jobs on initial render
   useEffect(() => {
     async function fetchJobs() {
-      try {
-        const jobs = await JoblyApi.getJobs();
-        console.log("Fetched jobs:", jobs);
-
-        // 🚨 Ensure that each job has the required properties (defensive programming)
-        const validJobs = jobs.filter(
-          (job) => job && job.id && job.title && job.companyName
-        );
-
-        setJobs(validJobs);
-      } catch (err) {
-        console.error("Error fetching jobs:", err);
-        setJobs([]);
-      } finally {
-        setIsLoading(false);
-      }
+      const fetchedJobs = await JoblyApi.getJobs();
+      setJobs(fetchedJobs);
     }
     fetchJobs();
   }, []);
 
+  // Handle job search by title
   async function handleSearch(evt) {
     evt.preventDefault();
-    setIsLoading(true);
-    try {
-      const jobs = await JoblyApi.getJobs(searchTerm.trim());
-      console.log("Search results:", jobs);
-
-      // 🚨 Ensure valid jobs are returned from search
-      const validJobs = jobs.filter(
-        (job) => job && job.id && job.title && job.companyName
-      );
-
-      setJobs(validJobs);
-    } catch (err) {
-      console.error("Search error:", err);
-      setJobs([]);
-    } finally {
-      setIsLoading(false);
-    }
+    const searchedJobs = await JoblyApi.getJobs(searchTerm.trim());
+    setJobs(searchedJobs);
   }
 
   return (
     <div className="JobList">
       <h1>Jobs</h1>
 
-      <form onSubmit={handleSearch} style={{ marginBottom: "20px" }}>
+      <form onSubmit={handleSearch}>
         <input
           name="searchTerm"
           value={searchTerm}
@@ -65,21 +42,17 @@ function JobList() {
         <button>Search</button>
       </form>
 
-      {isLoading ? (
-        <p>Loading jobs...</p>
-      ) : jobs.length > 0 ? (
-        <div className="JobList-list">
-          {jobs.map((job) => (
-            <JobCard
-              key={job.id}
-              id={job.id}
-              title={job.title}
-              salary={job.salary}
-              equity={job.equity}
-              companyName={job.companyName}
-            />
-          ))}
-        </div>
+      {jobs.length ? (
+        jobs.map((job) => (
+          <JobCard
+            key={job.id}
+            id={job.id}
+            title={job.title}
+            salary={job.salary}
+            equity={job.equity}
+            companyName={job.companyName || job.companyHandle} // ✅ fallback added
+          />
+        ))
       ) : (
         <p>No results found.</p>
       )}
