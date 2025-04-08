@@ -2,31 +2,38 @@ import React, { useEffect, useState } from "react";
 import JoblyApi from "../api";
 import JobCard from "../components/JobCard";
 
-/** Lists all jobs with optional search. */
+/** JobList: Shows a list of jobs with optional search input. */
 function JobList() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchJobs() {
-      const jobs = await JoblyApi.getJobs();
-      console.log("Jobs from API:", jobs); // ✅ Add this
-      setJobs(jobs);
+      try {
+        const jobs = await JoblyApi.getJobs();
+        setJobs(jobs);
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
     }
     fetchJobs();
   }, []);
 
   async function handleSearch(evt) {
     evt.preventDefault();
-    const jobs = await JoblyApi.getJobs(searchTerm.trim());
-    setJobs(jobs);
+    try {
+      const jobs = await JoblyApi.getJobs(searchTerm.trim());
+      setJobs(jobs);
+    } catch (err) {
+      console.error("Error searching jobs:", err);
+    }
   }
 
   return (
     <div className="JobList">
       <h1>Jobs</h1>
 
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch} style={{ marginBottom: "20px" }}>
         <input
           name="searchTerm"
           value={searchTerm}
@@ -37,7 +44,7 @@ function JobList() {
       </form>
 
       <div className="JobList-list">
-        {jobs.length ? (
+        {jobs.length > 0 ? (
           jobs.map((job) => (
             <JobCard
               key={job.id}
