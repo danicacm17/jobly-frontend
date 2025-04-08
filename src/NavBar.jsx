@@ -14,8 +14,9 @@ function NavBar({ logout }) {
           <NavLink to="/companies">Companies</NavLink>
           <NavLink to="/jobs">Jobs</NavLink>
           <NavLink to="/profile">Profile</NavLink>
-          <span>Welcome, {currentUser.username}</span>
-          <button onClick={logout}>Logout</button>
+          <span className="nav-link logout-link" onClick={logout}>
+            Logout {currentUser.username}
+          </span>
         </>
       ) : (
         <>
