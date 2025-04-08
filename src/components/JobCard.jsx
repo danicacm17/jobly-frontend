@@ -9,7 +9,7 @@ function JobCard({ job, apply }) {
   };
 
   return (
-    <div className="JobCard">
+    <div className="card">
       <h5>{job.title}</h5>
       <p>
         <b>Salary:</b> {job.salary ? `$${job.salary}` : "N/A"}

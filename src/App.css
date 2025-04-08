@@ -30,6 +30,10 @@ nav a:hover {
   color: #007bff;
 }
 
+.NavBar span {
+  padding: 2rem;
+}
+
 /* Homepage */
 .Homepage {
   text-align: center;
@@ -181,4 +185,8 @@ form button:hover {
   font-size: 0.9rem;
   font-weight: bold;
   color: red;
+}
+
+h2 {
+  text-align: center;
 }
