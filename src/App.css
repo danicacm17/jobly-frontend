@@ -40,7 +40,10 @@ nav a:hover {
 
 .nav-link.logout-link {
   cursor: pointer;
-  color: inherit;
+  margin-left: 0.75rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  color: #333;
   text-decoration: none;
 }
 
