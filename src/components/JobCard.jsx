@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../UserContext";
 
-/** JobCard Component
- * Shows basic job info and "Apply" button.
- * Props:
- * - job: { id, title, salary, equity, companyName, state }
- * - apply: function to call when applying to job
- */
+/** Show a single job card with apply functionality */
+function JobCard({ id, title, salary, equity, companyName }) {
+  const { currentUser, hasAppliedToJob, applyToJob } = useContext(UserContext);
+  const [applied, setApplied] = useState(false);
 
-function JobCard({ job, apply }) {
-  function handleApply(evt) {
-    evt.preventDefault();
-    if (apply) apply(job.id);
+  useEffect(() => {
+    if (currentUser && hasAppliedToJob) {
+      setApplied(hasAppliedToJob(id));
+    }
+  }, [id, currentUser, hasAppliedToJob]);
+
+  async function handleApply() {
+    if (hasAppliedToJob(id)) return;
+    await applyToJob(id);
+    setApplied(true);
   }
 
   return (
     <div className="card">
-      <h5>{job.title}</h5>
-      {job.companyName && <p><b>Company:</b> {job.companyName}</p>}
-      {job.salary != null && <p><b>Salary:</b> ${job.salary.toLocaleString()}</p>}
-      {job.equity && <p><b>Equity:</b> {job.equity}</p>}
-
+      <h5>{title}</h5>
+      <p><b>{companyName}</b></p>
+      {salary && <p>Salary: ${salary.toLocaleString()}</p>}
+      {equity && <p>Equity: {equity}</p>}
       <button
-        className="btn"
+        className="btn btn-primary"
         onClick={handleApply}
-        disabled={job.state === "applied"}>
-        {job.state === "applied" ? "Applied" : "Apply"}
+        disabled={applied}
+      >
+        {applied ? "Applied" : "Apply"}
       </button>
     </div>
   );
