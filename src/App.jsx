@@ -57,14 +57,12 @@ function App() {
   }
 
   return (
-    <HashRouter>
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}
       >
         <NavBar logout={logout} />
         <RoutesList login={login} signup={signup} />
       </UserContext.Provider>
-    </HashRouter>
   );
 }
 
