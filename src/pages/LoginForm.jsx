@@ -1,28 +1,58 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-/** LoginForm */
 function LoginForm({ login }) {
-  const [formData, setFormData] = useState({ username: "testuser", password: "password" });
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formErrors, setFormErrors] = useState([]);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    await login(formData);
-    navigate("/");
+    try {
+      await login(formData);       // 🔐 Attempt login
+      navigate("/");               // ✅ Redirect on success
+    } catch (errors) {
+      console.error("Login failed:", errors);
+      setFormErrors(errors);       // ❌ Show error on screen
+    }
   }
 
   function handleChange(evt) {
     const { name, value } = evt.target;
-    setFormData(data => ({ ...data, [name]: value }));
+    setFormData(f => ({ ...f, [name]: value }));
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="username" value={formData.username} onChange={handleChange} />
-      <input name="password" type="password" value={formData.password} onChange={handleChange} />
-      <button>Login</button>
-    </form>
+    <div className="LoginForm">
+      <h2>Log In</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          autoComplete="username"
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="current-password"
+        />
+        <button>Log In</button>
+      </form>
+
+      {/* 🛑 Show error if login failed */}
+      {formErrors.length > 0 && (
+        <div className="LoginForm-errors">
+          {formErrors.map((err, idx) => (
+            <p key={idx} style={{ color: "red" }}>{err}</p>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

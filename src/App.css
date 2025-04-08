@@ -12,19 +12,18 @@ body {
 nav {
   display: flex;
   justify-content: right;
-  /* align-items: right; */
-  padding: 1rem 2rem;
+  padding: 2rem 2rem;
   background-color: rgba(255, 255, 255, 0.9);
   color: #222;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ Nav links: reduce spacing */
 nav a {
-  margin-left: 0.75rem; /* was 1.5rem */
+  margin-left: 0.75rem;
   font-weight: 600;
   transition: color 0.3s ease;
   color: #333;
+  text-decoration: none;
 }
 
 nav a:hover {
@@ -73,6 +72,7 @@ nav a:hover {
   padding: 1.5rem;
   margin: 1.5rem 0;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
 .card h4 {
@@ -84,7 +84,7 @@ nav a:hover {
   margin: 0.3rem 0;
 }
 
-/* ✅ Apply button: raised a bit */
+/* Apply Button */
 .card button {
   background-color: #dc3545;
   color: white;
@@ -92,8 +92,9 @@ nav a:hover {
   padding: 0.5rem 1.2rem;
   border: none;
   border-radius: 5px;
-  float: right;
-  margin-top: -0.5rem; /* lift button slightly */
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
   cursor: pointer;
 }
 
@@ -172,4 +173,12 @@ form button:hover {
 
 .SearchForm button:hover {
   background-color: #0056b3;
+}
+
+/* Login/Signup Error Messages */
+.LoginForm-errors p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: red;
 }
