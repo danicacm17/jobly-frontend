@@ -13,22 +13,39 @@ function JobList() {
     async function fetchJobs() {
       try {
         const fetchedJobs = await JoblyApi.getJobs();
-        setJobs(fetchedJobs);
+        const userJobs = new Set(currentUser.applications);
+        const jobsWithStatus = fetchedJobs.map((job) =>
+          userJobs.has(job.id) ? { ...job, state: "applied" } : job
+        );
+        setJobs(jobsWithStatus);
       } catch (err) {
         console.error("Error fetching jobs:", err);
       }
     }
     fetchJobs();
-  }, []);
+  }, [currentUser]);
 
   async function handleSearch(evt) {
     evt.preventDefault();
     try {
       const searched = await JoblyApi.getJobs(searchTerm.trim());
-      setJobs(searched);
+      const userJobs = new Set(currentUser.applications);
+      const jobsWithStatus = searched.map((job) =>
+        userJobs.has(job.id) ? { ...job, state: "applied" } : job
+      );
+      setJobs(jobsWithStatus);
     } catch (err) {
       console.error("Error searching jobs:", err);
     }
+  }
+
+  async function handleApply(jobId) {
+    await applyToJob(jobId);
+    setJobs((jobs) =>
+      jobs.map((j) =>
+        j.id === jobId ? { ...j, state: "applied" } : j
+      )
+    );
   }
 
   return (
@@ -50,7 +67,7 @@ function JobList() {
             <JobCard
               key={job.id}
               job={job}
-              apply={applyToJob}
+              apply={handleApply}
             />
           ))
         ) : (
