@@ -1,5 +1,4 @@
 import React from "react";
-import "./JobCard.css"; // Optional: for styling
 
 /** Displays job info and apply button. */
 function JobCard({ job, apply }) {
