@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom"; // ✅ use HashRouter for Render deployment
 import JoblyApi from "./api";
 import UserContext from "./UserContext";
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -57,14 +57,14 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}
       >
         <NavBar logout={logout} />
         <RoutesList login={login} signup={signup} />
       </UserContext.Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

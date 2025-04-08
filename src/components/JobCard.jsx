@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../UserContext";
 
-/** Show a single job card. Can handle being passed either:
- * - job object via `job` prop (for company detail)
- * - or individual props (for job list)
+/** Show a single job card.
+ * Works for both:
+ * - passed job object via `job` prop (company detail)
+ * - or individual props (job list)
  */
 function JobCard(props) {
   const { currentUser, hasAppliedToJob, applyToJob } = useContext(UserContext);
   const [applied, setApplied] = useState(false);
 
-  // Allow for flexibility: props can come in either way
   const job = props.job || props;
   const { id, title, salary, equity, companyName } = job;
 
@@ -27,13 +27,12 @@ function JobCard(props) {
 
   return (
     <div className="card">
-      <h5>{job.title}</h5>
-      <p>{job.companyName}</p>
-      {job.salary && <div>Salary: ${job.salary}</div>}
-      {job.equity && <div>Equity: {job.equity}</div>}
+      <h4>{title}</h4>
+      {companyName && <p>{companyName}</p>}
+      {salary !== null && <p>Salary: ${salary.toLocaleString()}</p>}
+      {equity !== null && <p>Equity: {equity}</p>}
       {applyToJob && (
         <button
-          className="btn"
           onClick={handleApply}
           disabled={applied}
         >
