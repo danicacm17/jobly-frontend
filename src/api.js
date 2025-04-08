@@ -38,8 +38,9 @@ class JoblyApi {
 
   static async getJobs(title) {
     const res = await this.request("jobs", title ? { title } : {});
-    return res.jobs;
-  }
+    const validJobs = res.jobs.filter(job => job && job.id);
+    return validJobs;
+  }  
 
   static async applyToJob(username, jobId) {
     await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
