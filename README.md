@@ -1,12 +1,57 @@
-# React + Vite
+# Jobly Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the frontend of **Jobly**, a modern job board SPA built with **React** and powered by a RESTful backend API. Users can browse companies and jobs, sign up or log in, and apply to jobs — all from a clean, professional interface.
 
-Currently, two official plugins are available:
+## 🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+▶️ [Visit Jobly Live](https://jobly-frontend-mjo0.onrender.com/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📂 Project Overview
+
+- **React** with functional components
+- **React Router DOM v6** for page navigation
+- **HashRouter** used for deployment compatibility (Render)
+- **Context API** for managing logged-in user state
+- **Custom `useLocalStorage` hook** for token persistence
+- Styled with **global CSS** in `App.css`
+- Calls backend API for authentication, job/company data, and applications
+
+---
+
+## 🔧 Technologies
+
+- **React 19**
+- **React Router DOM**
+- **Axios**
+- **JWT Decode**
+- **Vite** (build tool)
+- **Custom Hooks & Context API**
+
+---
+
+## 🚀 Features
+
+- ✅ Sign up / log in
+- ✅ View all companies
+- ✅ View all jobs
+- ✅ Apply to jobs
+- ✅ Profile edit form
+- ✅ Persistent login using `localStorage`
+- ✅ Protected routes (authenticated only)
+- ✅ Responsive layout
+- ✅ Live deployed to Render
+
+---
+
+## 🖥️ Backend API
+
+This frontend connects to a deployed backend at:
+
+🔗 [`https://jobly-backend-r8fh.onrender.com`](https://jobly-backend-r8fh.onrender.com)
+
+*(Note: Backend provided by Springboard as starter code)*
+
+---
+
