@@ -40,7 +40,7 @@ function ProfileForm() {
 
   return (
     <div className="ProfileForm">
-      <h2>Profile</h2>
+      <h1>Profile</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
