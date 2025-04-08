@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import NavBar from "./NavBar";
 import RoutesList from "./RoutesList";
@@ -11,11 +10,11 @@ import "./App.css";
 function App() {
   const [token, setToken] = useLocalStorage("jobly-token");
   const [currentUser, setCurrentUser] = useState(null);
-  const [userInfoLoaded, setUserInfoLoaded] = useState(false); // ✅ NEW
+  const [userInfoLoaded, setUserInfoLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchUser() {
-      setUserInfoLoaded(false); // Reset while loading
+      setUserInfoLoaded(false);
       if (token) {
         try {
           JoblyApi.token = token;
@@ -30,7 +29,7 @@ function App() {
       } else {
         setCurrentUser(null);
       }
-      setUserInfoLoaded(true); // ✅ Only after everything is done
+      setUserInfoLoaded(true);
     }
     fetchUser();
   }, [token]);
@@ -50,15 +49,13 @@ function App() {
     setCurrentUser(null);
   }
 
-  if (!userInfoLoaded) return <p>Loading...</p>; // ✅ Do not render anything until user is ready
+  if (!userInfoLoaded) return <p>Loading...</p>;
 
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <NavBar logout={logout} />
-        <RoutesList login={login} signup={signup} />
-      </UserContext.Provider>
-    </BrowserRouter>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <NavBar logout={logout} />
+      <RoutesList login={login} signup={signup} />
+    </UserContext.Provider>
   );
 }
 
